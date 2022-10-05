@@ -1,0 +1,58 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+  package="com.yourproject">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+      android:name=".MainApplication"
+      android:label="@string/app_name"
+      android:icon="@mipmap/ic_launcher"
+      android:roundIcon="@mipmap/ic_launcher_round"
+      android:allowBackup="false"
+      android:theme="@style/AppTheme">
+      <activity
+        android:name=".MainActivity"
+        android:label="@string/app_name"
+        android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
+        android:launchMode="singleTask"
+        android:windowSoftInputMode="adjustResize"
+        android:exported="true">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        <!-- Branch URI Scheme -->
+        <intent-filter>
+            <!-- If utilizing $deeplink_path please explicitly declare your hosts, or utilize a wildcard(*) -->
+            <data android:scheme="yourproject" android:host="open" />
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.DEFAULT" />
+            <category android:name="android.intent.category.BROWSABLE" />
+        </intent-filter>
+        <!-- Branch App Links -->
+        <intent-filter android:autoVerify="true">
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.DEFAULT" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <data android:scheme="https" android:host="branch.app.link" />
+            <!-- example-alternate domain is required for App Links when the Journeys/Web SDK and Deepviews are used inside your website.  -->
+            <data android:scheme="https" android:host="branch-alternate.app.link" />
+        </intent-filter>
+      </activity>
+
+      <!-- Branch init -->
+      <meta-data android:name="io.branch.sdk.BranchKey" android:value="key_live_akTFshXnlW0oojkevse2OlonFygs6PVq" />
+      <meta-data android:name="io.branch.sdk.BranchKey.test" android:value="key_test_ulxrPt78x16DkYmWu4AHiimdpugOYPw" />
+      <meta-data android:name="io.branch.sdk.TestMode" android:value="false" />     <!-- Set to true to use Branch_Test_Key (useful when simulating installs and/or switching between debug and production flavors) -->
+
+    </application>
+
+    <queries>
+      <intent>
+          <action android:name="android.intent.action.SEND" />
+          <data android:mimeType="text/plain" />
+      </intent>
+    </queries>
+</manifest>
+
+1. 
