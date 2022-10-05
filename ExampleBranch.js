@@ -237,6 +237,40 @@ export default class ExampleBranch extends Component {
     }
   };
 
+  /**
+   * Event Tracking - Custom
+  */
+ eventTrackingCustom = async () => {
+  if (!this.product) {
+    this.dataCommerceShoesAdidas();
+  }
+  try {
+    let params = {
+      alias: 'Custom alias',
+      customData: {
+        depplink_path: 'product/FZ3777',
+        og_app_id: '129087217170262',
+        $og_title: 'Adidas Android App',
+        $canonical_identifier: 'adidas/5324',
+      },
+    };
+    let eventTrackingCustom = new BranchEvent('Custom alias', params);
+    eventTrackingCustom.logEvent();
+    this.addResult(
+      'success',
+      'eventTrackingCustom',
+      eventTrackingCustom,
+    );
+  } catch (err) {
+    console.log('sendStandardEvent err', err);
+      this.addResult(
+        'error',
+        'eventTrackingCustom',
+        err.toString(),
+      );
+  }
+ }
+
   addResult(type, slug, payload){
     let result = {type, slug, payload};
     this.setState({
@@ -264,7 +298,7 @@ export default class ExampleBranch extends Component {
                   }>{`${result.slug} (${result.type})`}</Text>
                 <Text onPress={()=> Linking.openURL(result.payload.url)}  style={styles.textSmall}>{JSON.stringify(result.payload, null, 2)}</Text>
               </View>
-            )
+            );
           })}
         </ScrollView>
       </View>
@@ -275,6 +309,7 @@ export default class ExampleBranch extends Component {
         <Button onPress={this.logStandardEventCommercePurchase}>BranchEvent.logEvent (Commerce Purchase)</Button>
         <Button onPress={this.logStandardEventContentSearch}>BranchEvent.logEvent (Content Search)</Button>
         <Button onPress={this.logStandardEventLifecycleRegister}>BranchEvent.logEvent (Lifecycle Complete Registration)</Button>
+        <Button onPress={this.eventTrackingCustom}>BranchEvent.logEvent (Custom Event)</Button>
       </ScrollView>
     </View>
     );
