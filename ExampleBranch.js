@@ -54,9 +54,9 @@ export default class ExampleBranch extends Component {
   };
 
   /**
-   * Create Deep Link
+   * Create deep link - generate short url
    */
-  createDeepLink = async () => {
+  generateShortUrl = async () => {
     let link = {
       feature: 'sharing',
       channel: 'adidas',
@@ -138,6 +138,55 @@ export default class ExampleBranch extends Component {
     }
   };
 
+  /**
+   * QR Code
+   */
+  qrCodeFeature = async () => {
+    var qrCodeSettings = {
+      width: 500,
+      codeColor: '#3b2016',
+      backgroundColor: '#a8e689',
+      centerLogo: 'https://www.freepnglogos.com/uploads/qr-code-png/qr-code-code-sticker-transparent-png-svg-vector-19.png',
+      margin: 1,
+      imageFormat: 'PNG',
+    };
+
+    var options = {
+      title: 'Content Test',
+      contentDescription: 'A test content desc',
+      contentMetadata: {
+        price: '200',
+        productName: 'QR Code Scanner',
+        customMetadata: {
+          og_title: 'Adidas Shoes',
+          og_description: 'Adidsa shoes for runner',
+        },
+      },
+    };
+
+    var lp = {
+      feature: 'qrCode',
+      tags: ['test', 'working'],
+      channel: 'facebook',
+      campaign: 'posters',
+    };
+
+    var controlParams = {
+      $desktop_url: 'https://www.adidas.com',
+      $fallback_url: 'https://www.adidas.com',
+    };
+
+    try {
+      let result = await branch.getBranchQRCode(qrCodeSettings, options, lp, controlParams);
+      console.log('QR Code', result);
+      this.addResult('success', 'qrCodeFeature', result);
+    }
+    catch (err) {
+      console.log('QR Code Err: ', err);
+      console.log('lastAttributedTouchData', err);
+      this.addResult('error', 'qrCodeFeature', err.toString());
+    }
+  }
 
   /**
    * Track Commerce Event Purchase
@@ -184,6 +233,10 @@ export default class ExampleBranch extends Component {
       );
     }
   };
+
+  /**
+   * Track Useres 
+   */
 
  /**
    * Event Standard Content - Search
@@ -327,9 +380,10 @@ export default class ExampleBranch extends Component {
       <Text style={styles.header}>METHODS</Text>
       <ScrollView style={styles.buttonsContainer}>
         <Button onPress={this.dataCommerceShoesAdidas}>Create Branch Adidas Object</Button>
-        <Button onPress={this.createDeepLink}>Deep Link - Generate Short URL</Button>
+        <Button onPress={this.generateShortUrl}>Deep Link - Generate Short URL</Button>
         <Button onPress={this.shareDeepLink}>Deep Link - Share deep link</Button>
         <Button onPress={this.readLastAttributedTouchData}>Deep Link - Read Last Attributed</Button>
+        <Button onPress={this.qrCodeFeature}>Try QR Code</Button>
         <Button onPress={this.logStandardEventCommercePurchase}>BranchEvent.logEvent (Commerce Purchase)</Button>
         <Button onPress={this.logStandardEventContentSearch}>BranchEvent.logEvent (Content Search)</Button>
         <Button onPress={this.logStandardEventLifecycleRegister}>BranchEvent.logEvent (Lifecycle Complete Registration)</Button>
