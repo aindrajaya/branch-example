@@ -163,9 +163,79 @@ export default class ExampleBranch extends Component {
     }
   };
 
-  /**
-   * Track Event Commerce Add to Wishlist
+ /**
+   * Event Standard Content - Search
    */
+  logStandardEventContentSearch = async () => {
+    if (!this.product) {
+      this.dataCommerceShoesAdidas();
+    }
+    try {
+      let branchEventSearch = new BranchEvent(
+        BranchEvent.Search,
+        [this.product],
+        {
+          alias: 'RMD R1 Adidas',
+          description: 'Product Search',
+          searchQuery: 'black men footbal',
+          customData: {
+            depplink_path: 'product/FZ3777',
+            og_app_id: '129087217170262',
+            $og_title: 'Adidas Android App',
+            $canonical_identifier: 'adidas/5324',
+          },
+        },
+      );
+      branchEventSearch.logEvent();
+      this.addResult(
+        'success',
+        'logStandardEventContentSearch',
+        branchEventSearch,
+      );
+    } catch (err) {
+      console.log('sendStandardEvent err', err);
+      this.addResult('error', 'logStandardEventContentSearch', err.toString());
+    }
+  };
+
+  /**
+   * Event Standard - Lifecycle
+   */
+   logStandardEventLifecycleRegister = async () => {
+    if (!this.product) {
+      this.dataCommerceShoesAdidas();
+    }
+    try {
+      let branchEventRegistration = new BranchEvent(
+        BranchEvent.CompleteRegistration,
+        [this.product],
+        {
+          os: 'Android',
+          description: 'Preferred',
+          developerIdentity: 'user1234',
+          // customData: {
+          //   depplink_path: 'product/FZ3777',
+          //   og_app_id: '129087217170262',
+          //   $og_title: 'Adidas Android App',
+          //   $canonical_identifier: 'adidas/5324',
+          // },
+        },
+      );
+      branchEventRegistration.logEvent();
+      this.addResult(
+        'success',
+        'logStandardEventLifecycleRegister',
+        branchEventRegistration,
+      );
+    } catch (err) {
+      console.log('sendStandardEvent err', err);
+      this.addResult(
+        'error',
+        'logStandardEventLifecycleRegister',
+        err.toString(),
+      );
+    }
+  };
 
   addResult(type, slug, payload){
     let result = {type, slug, payload};
@@ -203,6 +273,8 @@ export default class ExampleBranch extends Component {
         <Button onPress={this.dataCommerceShoesAdidas}>Create Branch Adidas Object</Button>
         <Button onPress={this.createDeepLink}>Deep Link - Generate Short URL</Button>
         <Button onPress={this.logStandardEventCommercePurchase}>BranchEvent.logEvent (Commerce Purchase)</Button>
+        <Button onPress={this.logStandardEventContentSearch}>BranchEvent.logEvent (Content Search)</Button>
+        <Button onPress={this.logStandardEventLifecycleRegister}>BranchEvent.logEvent (Lifecycle Complete Registration)</Button>
       </ScrollView>
     </View>
     );
