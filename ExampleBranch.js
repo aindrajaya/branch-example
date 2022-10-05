@@ -453,7 +453,7 @@ handleLinkYourApp = async () => {
         <Button onPress={this.logStandardEventContentSearch}>BranchEvent.logEvent (Content Search)</Button>
         <Button onPress={this.logStandardEventLifecycleRegister}>BranchEvent.logEvent (Lifecycle Complete Registration)</Button>
         <Button onPress={this.eventTrackingCustom}>BranchEvent.logEvent (Custom Event)</Button>
-        <Button onPress={this.handleLinkYourApp}>Handle Link to YourApp</Button>
+        <Button onPress={() => branch.openURL('https://aloysius.app.link/EF8tn2kwmdb', {newActivity: true})}>Handle Link to YourApp</Button>
       </ScrollView>
     </View>
     );
