@@ -235,8 +235,26 @@ export default class ExampleBranch extends Component {
   };
 
   /**
-   * Track Useres 
+   * Track Users
    */
+  eventTrackUser = async () => {
+    try {
+      let dataUser = branch.setIdentity('UserFromSavana');
+      branch.logout();
+      this.addResult(
+        'success',
+        'eventTrackUser',
+        dataUser,
+      );
+    } catch (err) {
+      console.log('sendStandardEvent err', err);
+      this.addResult(
+        'error',
+        'eventTrackUser',
+        err.toString(),
+      );
+    }
+  }
 
  /**
    * Event Standard Content - Search
@@ -384,6 +402,7 @@ export default class ExampleBranch extends Component {
         <Button onPress={this.shareDeepLink}>Deep Link - Share deep link</Button>
         <Button onPress={this.readLastAttributedTouchData}>Deep Link - Read Last Attributed</Button>
         <Button onPress={this.qrCodeFeature}>Try QR Code</Button>
+        <Button onPress={this.eventTrackUser}>Event Track User</Button>
         <Button onPress={this.logStandardEventCommercePurchase}>BranchEvent.logEvent (Commerce Purchase)</Button>
         <Button onPress={this.logStandardEventContentSearch}>BranchEvent.logEvent (Content Search)</Button>
         <Button onPress={this.logStandardEventLifecycleRegister}>BranchEvent.logEvent (Lifecycle Complete Registration)</Button>
