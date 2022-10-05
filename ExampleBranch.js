@@ -189,38 +189,6 @@ export default class ExampleBranch extends Component {
   }
 
   /**
-   * Navigate to Content
-   */
-  navigateToContent = async () => {
-    try {
-      let res = branch.subscribe(({error, params, uri}) => {
-        if (error) {
-          console.error('Error from Branch: ' + error);
-          return;
-        }
-        // params will never be null if error is null
-        if (params['+non_branch_link']) {
-          const nonBranchUrl = params['+non_branch_link'];
-          // Route non-Branch URL if appropriate.
-          return;
-        }
-        if (!params['+clicked_branch_link']) {
-              // A Branch link opened.
-            // Route link based on data in params
-            this.navigator.push({params: params, uri: uri});
-          return;
-        }
-      });
-      console.log('navigateToContent', res);
-      this.addResult('success', 'navigateToContent', res);
-    } catch (err) {
-      console.log('QR Code Err: ', err);
-      console.log('navigateToContent', err);
-      this.addResult('error', 'navigateToContent', err.toString());
-    }
-  }
-
-  /**
    * Event track Users
    */
    eventTrackUser = async () => {
@@ -453,7 +421,7 @@ handleLinkYourApp = async () => {
         <Button onPress={this.logStandardEventContentSearch}>BranchEvent.logEvent (Content Search)</Button>
         <Button onPress={this.logStandardEventLifecycleRegister}>BranchEvent.logEvent (Lifecycle Complete Registration)</Button>
         <Button onPress={this.eventTrackingCustom}>BranchEvent.logEvent (Custom Event)</Button>
-        <Button onPress={() => branch.openURL('https://aloysius.app.link/EF8tn2kwmdb', {newActivity: true})}>Handle Link to YourApp</Button>
+        <Button onPress={() => branch.openURL('https://aloysius.app.link/EF8tn2kwmdb')}>Handle Link to YourApp</Button>
       </ScrollView>
     </View>
     );
