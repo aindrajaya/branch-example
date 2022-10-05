@@ -118,6 +118,22 @@ export default class ExampleBranch extends Component {
   }
 
   /**
+   * Read Deep Link
+   */
+   readLastAttributedTouchData = async () => {
+    const attributionWindow = 365;
+    try {
+      let latd = await branch.lastAttributedTouchData(attributionWindow);
+      console.log('lastAttributedTouchData', latd);
+      this.addResult('success', 'lastAttributedTouchData', latd);
+    } catch (err) {
+      console.log('lastAttributedTouchData', err);
+      this.addResult('error', 'lastAttributedTouchData', err.toString());
+    }
+  };
+
+
+  /**
    * Track Commerce Event Purchase
    */
   logStandardEventCommercePurchase = async () => {
@@ -306,6 +322,7 @@ export default class ExampleBranch extends Component {
       <ScrollView style={styles.buttonsContainer}>
         <Button onPress={this.dataCommerceShoesAdidas}>Create Branch Adidas Object</Button>
         <Button onPress={this.createDeepLink}>Deep Link - Generate Short URL</Button>
+        <Button onPress={this.readLastAttributedTouchData}>Deep Link - Read Last Attributed</Button>
         <Button onPress={this.logStandardEventCommercePurchase}>BranchEvent.logEvent (Commerce Purchase)</Button>
         <Button onPress={this.logStandardEventContentSearch}>BranchEvent.logEvent (Content Search)</Button>
         <Button onPress={this.logStandardEventLifecycleRegister}>BranchEvent.logEvent (Lifecycle Complete Registration)</Button>
