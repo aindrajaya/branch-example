@@ -101,7 +101,7 @@ export default class ExampleBranch extends Component {
   /**
    * Share deep link
    */
-  ShareDeepLink = async () => {
+  shareDeepLink = async () => {
     let shareOptions = {
       messageHeader: 'Check this out',
       messageBody: 'No really, check this out!',
@@ -114,7 +114,13 @@ export default class ExampleBranch extends Component {
       $desktop_url: 'http://example.com/home',
       $ios_url: 'http://example.com/ios',
     };
-    let {channel, completed, error} = await this.product.showShareSheet(shareOptions, linkProperties, controlParams);
+    try {
+      let {channel, completed, error} = await this.product.showShareSheet(shareOptions, linkProperties, controlParams);
+      this.addResult('success', 'showShareSheet', completed);
+    } catch (err) {
+      console.log('showShareSheet err', err.toString());
+      this.addResult('error', 'showShareSheet', err.toString());
+    }
   }
 
   /**
@@ -322,6 +328,7 @@ export default class ExampleBranch extends Component {
       <ScrollView style={styles.buttonsContainer}>
         <Button onPress={this.dataCommerceShoesAdidas}>Create Branch Adidas Object</Button>
         <Button onPress={this.createDeepLink}>Deep Link - Generate Short URL</Button>
+        <Button onPress={this.shareDeepLink}>Deep Link - Share deep link</Button>
         <Button onPress={this.readLastAttributedTouchData}>Deep Link - Read Last Attributed</Button>
         <Button onPress={this.logStandardEventCommercePurchase}>BranchEvent.logEvent (Commerce Purchase)</Button>
         <Button onPress={this.logStandardEventContentSearch}>BranchEvent.logEvent (Content Search)</Button>
