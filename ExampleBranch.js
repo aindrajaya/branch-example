@@ -189,6 +189,28 @@ export default class ExampleBranch extends Component {
   }
 
   /**
+   * Event track Users
+   */
+   eventTrackUser = async () => {
+    try {
+      let dataUser = branch.setIdentity('UserFromSavana');
+      branch.logout();
+      this.addResult(
+        'success',
+        'eventTrackUser',
+        dataUser,
+      );
+    } catch (err) {
+      console.log('sendStandardEvent err', err);
+      this.addResult(
+        'error',
+        'eventTrackUser',
+        err.toString(),
+      );
+    }
+  }
+
+  /**
    * Track Commerce Event Purchase
    */
   logStandardEventCommercePurchase = async () => {
@@ -233,28 +255,6 @@ export default class ExampleBranch extends Component {
       );
     }
   };
-
-  /**
-   * Track Users
-   */
-  eventTrackUser = async () => {
-    try {
-      let dataUser = branch.setIdentity('UserFromSavana');
-      branch.logout();
-      this.addResult(
-        'success',
-        'eventTrackUser',
-        dataUser,
-      );
-    } catch (err) {
-      console.log('sendStandardEvent err', err);
-      this.addResult(
-        'error',
-        'eventTrackUser',
-        err.toString(),
-      );
-    }
-  }
 
  /**
    * Event Standard Content - Search
