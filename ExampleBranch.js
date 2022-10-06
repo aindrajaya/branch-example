@@ -189,6 +189,38 @@ export default class ExampleBranch extends Component {
   }
 
   /**
+   * Navigate to Content (BELUM UPLOAD GIT)
+   */
+  navigateToContent = async () => {
+    try {
+      let res = branch.subscribe(({error, params, uri}) => {
+        if (error) {
+          console.error('Error from Branch: ' + error);
+          return;
+        }
+        // params will never be null if error is null
+        if (params['+non_branch_link']) {
+          const nonBranchUrl = params['+non_branch_link'];
+          // Route non-Branch URL if appropriate.
+          return;
+        }
+        if (!params['+clicked_branch_link']) {
+              // A Branch link opened.
+            // Route link based on data in params
+            this.navigator.push({params: params, uri: uri});
+          return;
+        }
+      });
+      console.log('navigateToContent', res);
+      this.addResult('success', 'navigateToContent', res);
+    } catch (err) {
+      console.log('QR Code Err: ', err);
+      console.log('navigateToContent', err);
+      this.addResult('error', 'navigateToContent', err.toString());
+    }
+  }
+
+  /**
    * Event track Users
    */
    eventTrackUser = async () => {
@@ -378,6 +410,28 @@ handleLinkYourApp = async () => {
   }
 }
 
+receiveNotificationBeforeLinkOpened = async () => {
+  try {
+    const res = branch.subscribe({
+      onOpenStart: ({uri, cachedInitialEvent}) => {
+        console.log('Branch will open' + uri);
+      },
+      onOpenComplete: ({error, params, uri}) => {
+        if (error){
+          console.error('Error from branch opening uri' + uri);
+          return;
+        }
+        console.log('Branch opened' + uri);
+        //handle params
+      },
+    });
+    this.addResult('success', 'receiveNotificationBefore', res);
+  } catch (err) {
+    console.log('receiveNotificationBefore err', err);
+    this.addResult('error', 'receiveNotificationBefore', err.toString());
+  }
+}
+
   addResult(type, slug, payload){
     let result = {type, slug, payload};
     this.setState({
@@ -422,6 +476,7 @@ handleLinkYourApp = async () => {
         <Button onPress={this.logStandardEventLifecycleRegister}>BranchEvent.logEvent (Lifecycle Complete Registration)</Button>
         <Button onPress={this.eventTrackingCustom}>BranchEvent.logEvent (Custom Event)</Button>
         <Button onPress={() => branch.openURL('https://aloysius.app.link/EF8tn2kwmdb')}>Handle Link to YourApp</Button>
+        <Button onPress={this.receiveNotificationBeforeLinkOpened}>Notification - Receive notif before link opened</Button>
       </ScrollView>
     </View>
     );
