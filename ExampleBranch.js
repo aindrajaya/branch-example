@@ -21,6 +21,42 @@ export default class ExampleBranch extends Component {
     this.product.release();
   }
 
+  componentDidMount(){
+    branch.initSessionTtl = 10000;
+    this.subscribeToBranch();
+  }
+
+  /**
+   * Listening to Deep Links
+   */
+   subscribeToBranch = () => {
+    branch.subscribe(({ error, params }) => {
+      if (error) {
+        console.error('Error from Branch: ' + error);
+        return;
+      }
+      // params will never be null if error is null
+      if (params['+non_branch_link']) {
+        const nonBranchUrl = params['+non_branch_link'];
+        // Route non-Branch URL if appropriate.
+        return;
+      }
+      if (!params['+clicked_branch_link']) {
+        // Indicates initialization success and some other conditions.
+        // No link was opened.
+        return;
+      }
+      // A Branch link was opened.
+      // Route link based on data in params, e.g.
+      // Get title and url for route
+      const title = params.$og_title;
+      const url = params.$canonical_url;
+      const image = params.$og_image_url;
+      // Now push the view for this URL
+      console.log(title, url, image);
+    });
+  }
+
   /**
    * Create content reference - Adidas Shoes object
    */
@@ -371,15 +407,22 @@ export default class ExampleBranch extends Component {
   }
   try {
     let params = {
-      alias: 'Custom alias',
+      transactionID: '12344554',
+      currency: 'USD',
+      revenue: 1.5,
+      shipping: 10.2,
+      tax: 12.3,
+      coupon: 'Coupon_Y',
+      affiliation: 'test_affiliation',
+      description: 'Test purchase event',
+      searchQuery: 'test keyword',
+      alias: 'Custom Event from Android',
       customData: {
-        depplink_path: 'product/FZ3777',
-        og_app_id: '129087217170262',
-        $og_title: 'Adidas Android App',
-        $canonical_identifier: 'adidas/5324',
+        'custom_data_1': 'data 1 customize',
+        'custom_data_2': 'data 2 customize',
       },
     };
-    let eventTrackingCustom = new BranchEvent('Custom alias', params);
+    let eventTrackingCustom = new BranchEvent('Custom Event from Android', [this.product], params);
     eventTrackingCustom.logEvent();
     this.addResult(
       'success',
@@ -410,6 +453,9 @@ handleLinkYourApp = async () => {
   }
 }
 
+/**
+ * Received Notification before Link opened
+ */
 receiveNotificationBeforeLinkOpened = async () => {
   try {
     const res = branch.subscribe({
@@ -470,13 +516,14 @@ receiveNotificationBeforeLinkOpened = async () => {
         <Button onPress={this.shareDeepLink}>Deep Link - Share deep link</Button>
         <Button onPress={this.readLastAttributedTouchData}>Deep Link - Read Last Attributed</Button>
         <Button onPress={this.qrCodeFeature}>Try QR Code</Button>
+        {/* <Button onPress={this.navigateToContent}>Navigate to Content</Button> */}
         <Button onPress={this.eventTrackUser}>Event Track User</Button>
         <Button onPress={this.logStandardEventCommercePurchase}>BranchEvent.logEvent (Commerce Purchase)</Button>
         <Button onPress={this.logStandardEventContentSearch}>BranchEvent.logEvent (Content Search)</Button>
         <Button onPress={this.logStandardEventLifecycleRegister}>BranchEvent.logEvent (Lifecycle Complete Registration)</Button>
         <Button onPress={this.eventTrackingCustom}>BranchEvent.logEvent (Custom Event)</Button>
         <Button onPress={() => branch.openURL('https://aloysius.app.link/EF8tn2kwmdb')}>Handle Link to YourApp</Button>
-        <Button onPress={this.receiveNotificationBeforeLinkOpened}>Notification - Receive notif before link opened</Button>
+        {/* <Button onPress={this.receiveNotificationBeforeLinkOpened}>Notification - Receive notif before link opened</Button> */}
       </ScrollView>
     </View>
     );
@@ -527,3 +574,8 @@ const styles = StyleSheet.create({
     borderRadius: 4,
   },
 });
+
+/**
+ * cd android
+ * ./gradlew clean && ./gradlew :app:bundleReleaseJsAndAssets
+ */

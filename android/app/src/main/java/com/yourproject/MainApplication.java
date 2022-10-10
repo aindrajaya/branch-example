@@ -56,6 +56,11 @@ public class MainApplication extends Application implements ReactApplication {
   public void onCreate() {
     super.onCreate();
 
+    // Intent resultIntent = new Intent(this, TargetActivity.class);
+    // resultIntent.putExtra("branch","https://aloysius.app.link/EF8tn2kwmdb");
+    // resultIntent.putExtra("branch_force_new_session",true);
+    // PendingIntent resultPendingIntent =  PendingIntent.getActivity(this, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
     // Branch logging for debugging
     RNBranchModule.enableLogging();
     

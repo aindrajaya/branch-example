@@ -34,9 +34,9 @@
             <action android:name="android.intent.action.VIEW" />
             <category android:name="android.intent.category.DEFAULT" />
             <category android:name="android.intent.category.BROWSABLE" />
-            <data android:scheme="https" android:host="branch.app.link" />
+            <data android:scheme="https" android:host="aloysius.app.link" />
             <!-- example-alternate domain is required for App Links when the Journeys/Web SDK and Deepviews are used inside your website.  -->
-            <data android:scheme="https" android:host="branch-alternate.app.link" />
+            <data android:scheme="https" android:host="aloysius.com" />
         </intent-filter>
       </activity>
 
@@ -54,5 +54,3 @@
       </intent>
     </queries>
 </manifest>
-
-1. 
