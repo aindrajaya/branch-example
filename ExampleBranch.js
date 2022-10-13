@@ -1299,8 +1299,6 @@ receiveNotificationBeforeLinkOpened = async () => {
             );
           })}
         </ScrollView>
-
-        mantabjaya
       </View>
       <Text style={styles.header}>METHODS</Text>
       <ScrollView style={styles.buttonsContainer}>
@@ -1334,7 +1332,6 @@ receiveNotificationBeforeLinkOpened = async () => {
         <Button onPress={this.logStandardEventLifecycleInvite}>BranchEvent.logEvent (Lifecycle Invite)</Button>
         <Button onPress={this.logStandardEventLifecycleLogin}>BranchEvent.logEvent (Lifecycle Login)</Button>
         <Button onPress={this.logStandardEventLifecycleStartTrial}>BranchEvent.logEvent (Lifecycle Start Trial)</Button>
-        <Button onPress={this.logStandardEventLifecycleSubscribe}>BranchEvent.logEvent (Lifecycle Subscribe)</Button>
         <Button onPress={this.eventTrackingCustom}>BranchEvent.logEvent (Custom Event)</Button>
         <Button onPress={() => branch.openURL('https://aloysius.app.link/EF8tn2kwmdb')}>Handle Link to YourApp</Button>
         {/* <Button onPress={this.receiveNotificationBeforeLinkOpened}>Notification - Receive notif before link opened</Button> */}
