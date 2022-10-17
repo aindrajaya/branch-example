@@ -260,8 +260,9 @@ export default class ExampleBranch extends Component {
    * Event track Users
    */
    eventTrackUser = async () => {
+    let userId = '43222';
     try {
-      let dataUser = branch.setIdentity('UserFromSavana');
+      let dataUser = branch.setIdentity(userId);
       this.addResult(
         'success',
         'eventTrackUser',
@@ -581,49 +582,48 @@ export default class ExampleBranch extends Component {
     }
   };
 
-  // logStandardEventSpendCredits = async () => {
-  //   if (!this.product) {
-  //     this.dataCommerceShoesAdidas();
-  //   }
-  //   try {
-  //     let branchEventSpendCredits = new BranchEvent(
-  //       BranchEvent.SpendCredits,
-  //       BranchEvent.S
-  //       [this.product],
-  //       {
-  //         transactionID: '12344554',
-  //         currency: 'USD',
-  //         revenue: 1.5,
-  //         shipping: 10.2,
-  //         tax: 12.3,
-  //         coupon: 'Coupon_Y',
-  //         affiliation: 'test_affiliation',
-  //         description: 'Test purchase event',
-  //         searchQuery: 'test keyword',
-  //         customData: {
-  //           depplink_path: 'product/FZ3777',
-  //           og_app_id: '129087217170262',
-  //           $og_title: 'Adidas Android App params custom data',
-  //           $canonical_identifier: 'adidas/5324',
-  //         },
-  //         alias: 'Spend Credits',
-  //       },
-  //     );
-  //     branchEventSpendCredits.logEvent();
-  //     this.addResult(
-  //       'success',
-  //       'logStandardEventSpendCredits',
-  //       branchEventSpendCredits,
-  //     );
-  //   } catch (err) {
-  //     console.log('sendStandardEvent err', err);
-  //     this.addResult(
-  //       'error',
-  //       'logStandardEventSpendCredits',
-  //       err.toString(),
-  //     );
-  //   }
-  // };
+  logStandardEventSpendCredits = async () => {
+    if (!this.product) {
+      this.dataCommerceShoesAdidas();
+    }
+    try {
+      let branchEventSpendCredits = new BranchEvent(
+        BranchEvent.SpendCredits,
+        [this.product],
+        {
+          transactionID: '12344554',
+          currency: 'USD',
+          revenue: 1.5,
+          shipping: 10.2,
+          tax: 12.3,
+          coupon: 'Coupon_Y',
+          affiliation: 'test_affiliation',
+          description: 'Test purchase event',
+          searchQuery: 'test keyword',
+          customData: {
+            depplink_path: 'product/FZ3777',
+            og_app_id: '129087217170262',
+            $og_title: 'Adidas Android App params custom data',
+            $canonical_identifier: 'adidas/5324',
+          },
+          alias: 'Spend Credits',
+        },
+      );
+      branchEventSpendCredits.logEvent();
+      this.addResult(
+        'success',
+        'logStandardEventSpendCredits',
+        branchEventSpendCredits,
+      );
+    } catch (err) {
+      console.log('sendStandardEvent err', err);
+      this.addResult(
+        'error',
+        'logStandardEventSpendCredits',
+        err.toString(),
+      );
+    }
+  };
 
   logStandardEventCommerceViewAd = async () => {
     if (!this.product) {
