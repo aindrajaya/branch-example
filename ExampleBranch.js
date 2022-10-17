@@ -262,7 +262,6 @@ export default class ExampleBranch extends Component {
    eventTrackUser = async () => {
     try {
       let dataUser = branch.setIdentity('UserFromSavana');
-      branch.logout();
       this.addResult(
         'success',
         'eventTrackUser',
@@ -302,7 +301,7 @@ export default class ExampleBranch extends Component {
           customData: {
             depplink_path: 'product/FZ3777',
             og_app_id: '129087217170262',
-            $og_title: 'Adidas Android App from params di luar',
+            $og_title: 'Adidas Android App params custom data',
             $canonical_identifier: 'adidas/5324',
           },
           alias: 'WishList',
@@ -345,7 +344,7 @@ export default class ExampleBranch extends Component {
           customData: {
             depplink_path: 'product/FZ3777',
             og_app_id: '129087217170262',
-            $og_title: 'Adidas Android App from params di luar',
+            $og_title: 'Adidas Android App params custom data',
             $canonical_identifier: 'adidas/5324',
           },
           alias: 'WishList',
@@ -388,7 +387,7 @@ export default class ExampleBranch extends Component {
           customData: {
             depplink_path: 'product/FZ3777',
             og_app_id: '129087217170262',
-            $og_title: 'Adidas Android App from params di luar',
+            $og_title: 'Adidas Android App params custom data',
             $canonical_identifier: 'adidas/5324',
           },
           alias: 'ViewCart',
@@ -431,7 +430,7 @@ export default class ExampleBranch extends Component {
           customData: {
             depplink_path: 'product/FZ3777',
             og_app_id: '129087217170262',
-            $og_title: 'Adidas Android App from params di luar',
+            $og_title: 'Adidas Android App params custom data',
             $canonical_identifier: 'adidas/5324',
           },
           alias: 'Add Payment Info',
@@ -459,7 +458,7 @@ export default class ExampleBranch extends Component {
     }
     try {
       let branchEventClickAd = new BranchEvent(
-        BranchEvent.ClickAdd,
+        BranchEvent.ClickAd,
         [this.product],
         {
           transactionID: '12344554',
@@ -474,7 +473,7 @@ export default class ExampleBranch extends Component {
           customData: {
             depplink_path: 'product/FZ3777',
             og_app_id: '129087217170262',
-            $og_title: 'Adidas Android App from params di luar',
+            $og_title: 'Adidas Android App params custom data',
             $canonical_identifier: 'adidas/5324',
           },
           alias: 'Click Ad',
@@ -517,7 +516,7 @@ export default class ExampleBranch extends Component {
           customData: {
             depplink_path: 'product/FZ3777',
             og_app_id: '129087217170262',
-            $og_title: 'Adidas Android App from params di luar',
+            $og_title: 'Adidas Android App params custom data',
             $canonical_identifier: 'adidas/5324',
           },
           alias: 'Initiate Purchase',
@@ -560,7 +559,7 @@ export default class ExampleBranch extends Component {
           customData: {
             depplink_path: 'product/FZ3777',
             og_app_id: '129087217170262',
-            $og_title: 'Adidas Android App from params di luar',
+            $og_title: 'Adidas Android App params custom data',
             $canonical_identifier: 'adidas/5324',
           },
           alias: 'WishList',
@@ -582,48 +581,49 @@ export default class ExampleBranch extends Component {
     }
   };
 
-  logStandardEventSpendCredits = async () => {
-    if (!this.product) {
-      this.dataCommerceShoesAdidas();
-    }
-    try {
-      let branchEventSpendCredits = new BranchEvent(
-        BranchEvent.SpendCredits,
-        [this.product],
-        {
-          transactionID: '12344554',
-          currency: 'USD',
-          revenue: 1.5,
-          shipping: 10.2,
-          tax: 12.3,
-          coupon: 'Coupon_Y',
-          affiliation: 'test_affiliation',
-          description: 'Test purchase event',
-          searchQuery: 'test keyword',
-          customData: {
-            depplink_path: 'product/FZ3777',
-            og_app_id: '129087217170262',
-            $og_title: 'Adidas Android App from params di luar',
-            $canonical_identifier: 'adidas/5324',
-          },
-          alias: 'Spend Credits',
-        },
-      );
-      branchEventSpendCredits.logEvent();
-      this.addResult(
-        'success',
-        'logStandardEventSpendCredits',
-        branchEventSpendCredits,
-      );
-    } catch (err) {
-      console.log('sendStandardEvent err', err);
-      this.addResult(
-        'error',
-        'logStandardEventSpendCredits',
-        err.toString(),
-      );
-    }
-  };
+  // logStandardEventSpendCredits = async () => {
+  //   if (!this.product) {
+  //     this.dataCommerceShoesAdidas();
+  //   }
+  //   try {
+  //     let branchEventSpendCredits = new BranchEvent(
+  //       BranchEvent.SpendCredits,
+  //       BranchEvent.S
+  //       [this.product],
+  //       {
+  //         transactionID: '12344554',
+  //         currency: 'USD',
+  //         revenue: 1.5,
+  //         shipping: 10.2,
+  //         tax: 12.3,
+  //         coupon: 'Coupon_Y',
+  //         affiliation: 'test_affiliation',
+  //         description: 'Test purchase event',
+  //         searchQuery: 'test keyword',
+  //         customData: {
+  //           depplink_path: 'product/FZ3777',
+  //           og_app_id: '129087217170262',
+  //           $og_title: 'Adidas Android App params custom data',
+  //           $canonical_identifier: 'adidas/5324',
+  //         },
+  //         alias: 'Spend Credits',
+  //       },
+  //     );
+  //     branchEventSpendCredits.logEvent();
+  //     this.addResult(
+  //       'success',
+  //       'logStandardEventSpendCredits',
+  //       branchEventSpendCredits,
+  //     );
+  //   } catch (err) {
+  //     console.log('sendStandardEvent err', err);
+  //     this.addResult(
+  //       'error',
+  //       'logStandardEventSpendCredits',
+  //       err.toString(),
+  //     );
+  //   }
+  // };
 
   logStandardEventCommerceViewAd = async () => {
     if (!this.product) {
@@ -646,7 +646,7 @@ export default class ExampleBranch extends Component {
           customData: {
             depplink_path: 'product/FZ3777',
             og_app_id: '129087217170262',
-            $og_title: 'Adidas Android App from params di luar',
+            $og_title: 'Adidas Android App params custom data',
             $canonical_identifier: 'adidas/5324',
           },
           alias: 'View AD',
@@ -831,69 +831,70 @@ export default class ExampleBranch extends Component {
     }
   };
 
-  logStandardEventContentInitiateStream = async () => {
-    if (!this.product) {
-      this.dataCommerceShoesAdidas();
-    }
-    try {
-      let branchEventInitiateStream = new BranchEvent(
-        BranchEvent.InitiateStream,
-        [this.product],
-        {
-          alias: 'RMD R1 Adidas',
-          description: 'Product Search',
-          searchQuery: 'black men footbal',
-          customData: {
-            depplink_path: 'product/FZ3777',
-            og_app_id: '129087217170262',
-            $og_title: 'Adidas Android App',
-            $canonical_identifier: 'adidas/5324',
-          },
-        },
-      );
-      branchEventInitiateStream.logEvent();
-      this.addResult(
-        'success',
-        'logStandardEventContentInitiateStream',
-        branchEventInitiateStream,
-      );
-    } catch (err) {
-      console.log('sendStandardEvent err', err);
-      this.addResult('error', 'logStandardEventContentInitiateStream', err.toString());
-    }
-  };
+  // logStandardEventContentInitiateStream = async () => {
+  //   if (!this.product) {
+  //     this.dataCommerceShoesAdidas();
+  //   }
+  //   try {
+  //     let branchEventInitiateStream = new BranchEvent(
+  //       BranchEvent.InitiateStream, //Not working
+  //       [this.product],
+  //       {
+  //         alias: 'RMD R1 Adidas',
+  //         description: 'Product Search',
+  //         searchQuery: 'black men footbal',
+  //         customData: {
+  //           depplink_path: 'product/FZ3777',
+  //           og_app_id: '129087217170262',
+  //           $og_title: 'Adidas Android App',
+  //           $canonical_identifier: 'adidas/5324',
+  //         },
+  //       },
+  //     );
+  //     branchEventInitiateStream.logEvent();
+  //     this.addResult(
+  //       'success',
+  //       'logStandardEventContentInitiateStream',
+  //       branchEventInitiateStream,
+  //     );
+  //   } catch (err) {
+  //     console.log('sendStandardEvent err', err);
+  //     this.addResult('error', 'logStandardEventContentInitiateStream', err.toString());
+  //   }
+  // };
 
-  logStandardEventContentCompleteStream = async () => {
-    if (!this.product) {
-      this.dataCommerceShoesAdidas();
-    }
-    try {
-      let branchEventCompleteStream = new BranchEvent(
-        BranchEvent.CompleteStream,
-        [this.product],
-        {
-          alias: 'RMD R1 Adidas',
-          description: 'Product Search',
-          searchQuery: 'black men footbal',
-          customData: {
-            depplink_path: 'product/FZ3777',
-            og_app_id: '129087217170262',
-            $og_title: 'Adidas Android App',
-            $canonical_identifier: 'adidas/5324',
-          },
-        },
-      );
-      branchEventCompleteStream.logEvent();
-      this.addResult(
-        'success',
-        'logStandardEventContentCompleteStream',
-        branchEventCompleteStream,
-      );
-    } catch (err) {
-      console.log('sendStandardEvent err', err);
-      this.addResult('error', 'logStandardEventContentCompleteStream', err.toString());
-    }
-  };
+  // logStandardEventContentCompleteStream = async () => {
+  //   if (!this.product) {
+  //     this.dataCommerceShoesAdidas();
+  //   }
+  //   try {
+  //     let branchEventCompleteStream = new BranchEvent(
+  //       BranchEvent.CompleteStream,
+  //       BranchEvent.compl
+  //       [this.product],
+  //       {
+  //         alias: 'RMD R1 Adidas',
+  //         description: 'Product Search',
+  //         searchQuery: 'black men footbal',
+  //         customData: {
+  //           depplink_path: 'product/FZ3777',
+  //           og_app_id: '129087217170262',
+  //           $og_title: 'Adidas Android App',
+  //           $canonical_identifier: 'adidas/5324',
+  //         },
+  //       },
+  //     );
+  //     branchEventCompleteStream.logEvent();
+  //     this.addResult(
+  //       'success',
+  //       'logStandardEventContentCompleteStream',
+  //       branchEventCompleteStream,
+  //     );
+  //   } catch (err) {
+  //     console.log('sendStandardEvent err', err);
+  //     this.addResult('error', 'logStandardEventContentCompleteStream', err.toString());
+  //   }
+  // };
 
 
   /**
@@ -1160,15 +1161,24 @@ export default class ExampleBranch extends Component {
         BranchEvent.Subscribe,
         [this.product],
         {
+          transactionID: '12344554',
+          currency: 'USD',
+          revenue: 1.5,
+          shipping: 10.2,
+          tax: 12.3,
+          coupon: 'Coupon_Y',
+          affiliation: 'test_affiliation',
+          searchQuery: 'test keyword',
+          alias: 'Custom Event from Android',
           os: 'Android',
           description: 'Preferred',
           developerIdentity: 'user1234',
-          // customData: {
-          //   depplink_path: 'product/FZ3777',
-          //   og_app_id: '129087217170262',
-          //   $og_title: 'Adidas Android App',
-          //   $canonical_identifier: 'adidas/5324',
-          // },
+          customData: {
+            depplink_path: 'product/FZ3777',
+            og_app_id: '129087217170262',
+            $og_title: 'Adidas Android App',
+            $canonical_identifier: 'adidas/5324',
+          },
         },
       );
       branchEventSubscribe.logEvent();
@@ -1310,21 +1320,21 @@ receiveNotificationBeforeLinkOpened = async () => {
         {/* <Button onPress={this.navigateToContent}>Navigate to Content</Button> */}
         <Button onPress={this.eventTrackUser}>Event Track User</Button>
         <Button onPress={this.logStandardEventCommercePurchase}>BranchEvent.logEvent (Commerce Purchase)</Button>
-        <Button onPress={this.logStandardEventCommerceAddToWhislist}>BranchEvent.logEvent (Commerce Purchase)</Button>
+        <Button onPress={this.logStandardEventCommerceAddToWhislist}>BranchEvent.logEvent (Commerce Add to Wishlist)</Button>
         <Button onPress={this.logStandardEventViewCart}>BranchEvent.logEvent (Commerce View Cart)</Button>
         <Button onPress={this.logStandardEventCommmerceAddPaymentInfo}>BranchEvent.logEvent (Commerce Add Payment Info)</Button>
         <Button onPress={this.logStandardEventCommerceClickAd}>BranchEvent.logEvent (Commerce Click Ad)</Button>
         <Button onPress={this.logStandardEventComerceInitiatePurchase}>BranchEvent.logEvent (Commerce Initiate Purchase)</Button>
         <Button onPress={this.logStandardEventComerceReserve}>BranchEvent.logEvent (Commerce Reserve)</Button>
         <Button onPress={this.logStandardEventCommerceViewAd}>BranchEvent.logEvent (View Ad)</Button>
-        <Button onPress={this.logStandardEventSpendCredits}>BranchEvent.logEvent (Spend Credits)</Button>
+        {/* <Button onPress={this.logStandardEventSpendCredits}>BranchEvent.logEvent (Spend Credits)</Button> */}
         <Button onPress={this.logStandardEventContentSearch}>BranchEvent.logEvent (Content Search)</Button>
         <Button onPress={this.logStandardEventContentViewItem}>BranchEvent.logEvent (Content View Item)</Button>
         <Button onPress={this.logStandardEventContentViewItems}>BranchEvent.logEvent (Content View Items)</Button>
         <Button onPress={this.logStandardEventContentRate}>BranchEvent.logEvent (Content Rate)</Button>
         <Button onPress={this.logStandardEventContentShare}>BranchEvent.logEvent (Content Share)</Button>
-        <Button onPress={this.logStandardEventContentInitiateStream}>BranchEvent.logEvent (Content Initiate Stream)</Button>
-        <Button onPress={this.logStandardEventContentCompleteStream}>BranchEvent.logEvent (Content Complete Stream)</Button>
+        {/* <Button onPress={this.logStandardEventContentInitiateStream}>BranchEvent.logEvent (Content Initiate Stream)</Button> */}
+        {/* <Button onPress={this.logStandardEventContentCompleteStream}>BranchEvent.logEvent (Content Complete Stream)</Button> */}
         <Button onPress={this.logStandardEventLifecycleRegister}>BranchEvent.logEvent (Lifecycle Complete Registration)</Button>
         <Button onPress={this.logStandardEventLifecycleCompleteTutorial}>BranchEvent.logEvent (Lifecycle Complete Tutorial)</Button>
         <Button onPress={this.logStandardEventLifecycleAchieveLevel}>BranchEvent.logEvent (Lifecycle Achieve Level)</Button>
@@ -1332,6 +1342,7 @@ receiveNotificationBeforeLinkOpened = async () => {
         <Button onPress={this.logStandardEventLifecycleInvite}>BranchEvent.logEvent (Lifecycle Invite)</Button>
         <Button onPress={this.logStandardEventLifecycleLogin}>BranchEvent.logEvent (Lifecycle Login)</Button>
         <Button onPress={this.logStandardEventLifecycleStartTrial}>BranchEvent.logEvent (Lifecycle Start Trial)</Button>
+        <Button onPress={this.logStandardEventLifecycleSubscribe}>BranchEvent.logEvent (Lifecycle Subscribe)</Button>
         <Button onPress={this.eventTrackingCustom}>BranchEvent.logEvent (Custom Event)</Button>
         <Button onPress={() => branch.openURL('https://aloysius.app.link/EF8tn2kwmdb')}>Handle Link to YourApp</Button>
         {/* <Button onPress={this.receiveNotificationBeforeLinkOpened}>Notification - Receive notif before link opened</Button> */}
