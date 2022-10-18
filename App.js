@@ -27,7 +27,6 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 
 import ExampleBranch from './ExampleBranch';
-import Echo from './NavigateToContent';
 
 /* $FlowFixMe[missing-local-annot] The type annotation(s) required by Flow's
  * LTI update could not be added via codemod */
@@ -74,7 +73,6 @@ const App: () => Node = () => {
         contentInsetAdjustmentBehavior="automatic"
         style={backgroundStyle}>
         <ExampleBranch />
-        {/* <Echo /> */}
       </ScrollView>
     </SafeAreaView>
   );
