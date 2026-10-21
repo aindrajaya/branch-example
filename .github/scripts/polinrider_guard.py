@@ -130,7 +130,7 @@ def scan_ref(repo, ref, blobs):
         data = blobs.read(sha)
         vendored = any(f'/{d}' in f'/{low}' for d in SKIP_DIRS) or '.min.' in base
 
-        if is_font:
+        if is_font and data:  # file kosong (placeholder) tidak bisa membawa payload
             head = data[:4]
             bad = False
             if ext in FONT_MAGIC:
