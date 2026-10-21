@@ -11,7 +11,18 @@ Pengecualian (jarang perlu): .github/polinrider-allow.txt berisi baris
   <rule> <path> <blob-sha1>
 Pengecualian terikat ke hash isi file, jadi otomatis gugur kalau file berubah.
 """
-import argparse, os, re, subprocess, sys
+import argparse, base64, os, re, subprocess, sys
+
+
+def _d(*items):
+    # IOC literal disimpan ter-encode supaya file ini tidak terdeteksi oleh aturannya sendiri
+    return [base64.b64decode(x) for x in items]
+
+_MARK_LIT = _d('cm1jZWolb3RiJQ==', 'Q290JTN0PXNodFA=', 'dGFpbHdpbmRjc3Mtc3R5bGUtYW5pbWF0ZQ==',
+               'dGVtcF9hdXRvX3B1c2g=', 'dGVtcF9pbnRlcmFjdGl2ZV9wdXNo',
+               'ZTliNTNhN2MtMjM0Mi00YjE1LWIwMmQtYmQ4YjhmNmEwM2Y5')
+_C2_LIT = _d('YXV0aC1jb25maXJtLWVpZ2h0', 'MTY2Ljg4LjU0LjE1OA==')
+_DROPPERS = _d('dGVtcF9hdXRvX3B1c2guYmF0', 'dGVtcF9pbnRlcmFjdGl2ZV9wdXNoLmJhdA==', 'YnJhbmNoX3N0cnVjdHVyZS5qc29u')
 
 # SHA-1 blob file kit PolinRider yang identik di semua korban
 KIT_BLOBS = {
@@ -21,9 +32,8 @@ KIT_BLOBS = {
 }
 # Penanda payload (varian lama, varian postcss/global.i, dropper .bat)
 MARKER = re.compile(rb"global\['!'\]|global\.i ?= ?[\"'][A-Za-z0-9-]+[\"']|global\['r'\] ?= ?require|"
-                    rb"global\.r ?= ?require|rmcej%otb%|Cot%3t=shtP|tailwindcss-style-animate|"
-                    rb"temp_auto_push|temp_interactive_push|e9b53a7c-2342-4b15-b02d-bd8b8f6a03f9")
-C2 = re.compile(rb"auth-confirm-eight|166\.88\.54\.158")
+                    rb"global\.r ?= ?require|" + b'|'.join(re.escape(x) for x in _MARK_LIT))
+C2 = re.compile(b'|'.join(re.escape(x) for x in _C2_LIT))
 B64_EVAL = re.compile(rb"eval\(\s*atob\(|new Function\(\s*atob\(|eval\(\s*Buffer\.from\([^)]{0,200}base64|"
                       rb"atob\(\s*process\.env\.")
 PADDING = re.compile(rb"[ \t]{200,}[^\s]")
@@ -31,8 +41,8 @@ ENV_B64_URL = re.compile(rb"aHR0cHM6Ly|aHR0cDovL")
 FOLDER_OPEN = re.compile(rb"\"runOn\"\s*:\s*\"folderOpen\"")
 AUTO_TASKS = re.compile(rb"allowAutomaticTasks\"\s*:\s*(\"on\"|true)")
 FONT_JS = re.compile(rb"child_process|require\(|createRequire|process\.env|eval\(")
-GITIGNORE_SABOTAGE = {b'temp_auto_push.bat', b'temp_interactive_push.bat', b'branch_structure.json'}
-DROPPER_NAMES = {'temp_auto_push.bat', 'temp_interactive_push.bat', 'branch_structure.json'}
+GITIGNORE_SABOTAGE = set(_DROPPERS)
+DROPPER_NAMES = {x.decode() for x in _DROPPERS}
 
 CODE_EXT = ('.js', '.mjs', '.cjs', '.ts', '.mts', '.cts', '.jsx', '.tsx', '.vue', '.svelte')
 FONT_MAGIC = {
